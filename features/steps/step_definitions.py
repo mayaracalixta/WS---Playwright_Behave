@@ -2,7 +2,7 @@ from imports import *
 
 # Carrega os dados do arquivo JSON
 def carregar_dados():
-    with open('features\\data\\cadastro.json', 'r') as f:
+    with open('features/data/cadastro.json', 'r') as f:
         return json.load(f)
 
 dados = (carregar_dados())
