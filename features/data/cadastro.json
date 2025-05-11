@@ -2,5 +2,8 @@
     "dia": "23",
     "mes": "July",
     "ano": "2004",
-    "country": "Canada"
+    "country": "Canada",
+    "product":"Blue Top",
+    "search_product":"#search_product",
+    "price_product":"Rs. 500"
 }

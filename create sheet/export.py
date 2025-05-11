@@ -1,5 +1,4 @@
 import os
-import re
 import pandas as pd
 
 def extrair_cenarios_de_features(pasta, arquivos_escolhidos=None):
@@ -26,7 +25,8 @@ def extrair_cenarios_de_features(pasta, arquivos_escolhidos=None):
                 
                 elif linha.startswith("Cenário:"):
                     if cenario_atual and steps:
-                        dados.append([arquivo, funcionalidade, cenario_atual, "\n".join(steps)])
+                        dados.append([arquivo, funcionalidade, cenario_atual, "\n".join(steps), "", "Em andamento"])  
+                        
                         steps = []
 
                     cenario_atual = linha.replace("Cenário:", "").strip()
@@ -35,10 +35,10 @@ def extrair_cenarios_de_features(pasta, arquivos_escolhidos=None):
                     steps.append(linha)
 
             if cenario_atual and steps:
-                dados.append([arquivo, funcionalidade, cenario_atual, "\n".join(steps)])
+                dados.append([arquivo, funcionalidade, cenario_atual, "\n".join(steps),""])  # Coluna Status com valor inicial
 
-    return pd.DataFrame(dados, columns=["Arquivo", "Funcionalidade", "Cenário", "Casos de Teste (Passo ou Gherkin)"])
-
+    # Criando o DataFrame com a nova coluna de status
+    return pd.DataFrame(dados, columns=["Arquivo", "Funcionalidade", "Cenário", "Casos de Teste (Passo ou Gherkin)", "Status"])
 
 def gerar_nome_arquivo(base="cenarios_de_teste"):
     i = 1
@@ -48,17 +48,16 @@ def gerar_nome_arquivo(base="cenarios_de_teste"):
             return nome
         i += 1
 
-
 # Caminho para a pasta com os arquivos .feature
 pasta = "features"
 
 # Opção do usuário
-todos = input("❓ Deseja exportar todos os arquivos? (s/n): ").strip().lower()
+todos = input("\nExportar todos os arquivos? (s/n): ").strip().lower()
 
 if todos == 's':
     arquivos_escolhidos = None
 else:
-    print("\n📂 Arquivos disponíveis na pasta:")
+    print("\nArquivos disponíveis na pasta:")
     arquivos = [f for f in os.listdir(pasta) if f.endswith(".feature")]
     for i, nome in enumerate(arquivos):
         print(f"{i+1}: {nome}")
@@ -72,5 +71,4 @@ df = extrair_cenarios_de_features(pasta, arquivos_escolhidos)
 nome_arquivo = gerar_nome_arquivo()
 df.to_excel(nome_arquivo, index=False)
 
-print(f"\n✅ Planilha '{nome_arquivo}' criada com sucesso!")
-
+print(f"\nPlanilha '{nome_arquivo}' criada com sucesso!")

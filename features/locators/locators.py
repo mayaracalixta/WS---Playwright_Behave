@@ -2,6 +2,10 @@ class HomePageLocators:
     BOTAO_LOGIN= 'text= Signup / Login'
     BOTAO_SIGNUP= '[data-qa="signup-button"]'
     BOTAO_CREATE= '[data-qa="create-account"]'
+    BOTAO_SEARCH= '#submit_search'
+    MENU_PRODUCTS= 'text= Products'
+    SEARCH_PRODUCT= '#search_product'
+    PRODUCT= 'h2'
 
     INPUT_NAME_LOGIN= '[data-qa="signup-name"]'
     INPUT_EMAIL_LOGIN= '[data-qa="signup-email"]'

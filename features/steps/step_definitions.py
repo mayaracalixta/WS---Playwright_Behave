@@ -55,5 +55,21 @@ def step_impl(context):
 @then('uma mensagem de sucesso deve aparecer na tela')
 def step_impl(context):
     expect(context.page.locator('text=Account Created!')).to_be_visible()
+    stop_browser(context.playwright, context.browser)
 
 
+
+@when('ir para a página de pesquisar produto')
+def step_impl(context):
+     context.page.click(HomePageLocators.MENU_PRODUCTS)
+    
+@when('informar o produto')
+def step_impl(context):
+     context.page.fill(HomePageLocators.SEARCH_PRODUCT,dados["search_product"])
+     context.page.click(HomePageLocators.BOTAO_SEARCH)
+
+@then('o produto deve ser apresentado na tela')
+def step_impl(context):
+    expect(context.page.locator(HomePageLocators.PRODUCT, has_text=dados["price_product"]).first).to_be_visible()
+    stop_browser(context.playwright, context.browser)
+  
